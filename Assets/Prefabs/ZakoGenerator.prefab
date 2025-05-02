@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generateInterval: 0.4
-  Zako: {fileID: 5249363819222185815, guid: 973b7bd866e3b49d6b0d806400960a8d, type: 3}
+  Zako: {fileID: 8484264117809617835, guid: 82c4fc0f9d887413faa98c82006057f7, type: 3}
   minX: -5
   maxX: 5
   y: 0
