@@ -364,6 +364,30 @@ PrefabInstance:
       propertyPath: Zako
       value: 
       objectReference: {fileID: 5249363819222185815, guid: 973b7bd866e3b49d6b0d806400960a8d, type: 3}
+    - target: {fileID: 7337407866334192983, guid: 71ffa8869d2164900bfc6a9010d2bd66, type: 3}
+      propertyPath: spacingX
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7337407866334192983, guid: 71ffa8869d2164900bfc6a9010d2bd66, type: 3}
+      propertyPath: spacingZ
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7337407866334192983, guid: 71ffa8869d2164900bfc6a9010d2bd66, type: 3}
+      propertyPath: slaveOffsetZ
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7337407866334192983, guid: 71ffa8869d2164900bfc6a9010d2bd66, type: 3}
+      propertyPath: frontRowCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7337407866334192983, guid: 71ffa8869d2164900bfc6a9010d2bd66, type: 3}
+      propertyPath: slaveSpacingX
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7337407866334192983, guid: 71ffa8869d2164900bfc6a9010d2bd66, type: 3}
+      propertyPath: zakoSlavePrefab
+      value: 
+      objectReference: {fileID: 8806664290735961212, guid: c0fa756e4353044138a12b74bf108cc3, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -379,7 +403,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1356375811449026916, guid: ad37d5a7a55673c46bf3acddf832dca9, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356375811449026916, guid: ad37d5a7a55673c46bf3acddf832dca9, type: 3}
+      propertyPath: scrollSpeed
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6236533027716299572, guid: ad37d5a7a55673c46bf3acddf832dca9, type: 3}
       propertyPath: m_Name
