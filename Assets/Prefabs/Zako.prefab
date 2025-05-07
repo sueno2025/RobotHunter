@@ -1635,9 +1635,10 @@ GameObject:
   - component: {fileID: 1924954524245753854}
   - component: {fileID: 1303790976676658642}
   - component: {fileID: -4106612395696669618}
+  - component: {fileID: -2093110950205968403}
   m_Layer: 0
   m_Name: Zako
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1670,8 +1671,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54acbbba783f54d7ba4f4c768829280d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
-  player: {fileID: 0}
+  speed: 6.3
+  player: {fileID: 2668209066040404245, guid: 8985ab95861843c41b2b6e988104c6bf, type: 3}
   steerStrength: 0.1
 --- !u!54 &1303790976676658642
 Rigidbody:
@@ -1742,6 +1743,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &-2093110950205968403
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5249363819222185815}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2.5
+  m_Center: {x: 0, y: -1.41, z: 0}
 --- !u!1 &5316444699845902795
 GameObject:
   m_ObjectHideFlags: 0

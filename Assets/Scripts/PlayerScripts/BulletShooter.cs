@@ -24,11 +24,26 @@ public class BulletShooter : MonoBehaviour
     Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
     // カメラの向いている方向に飛ばす
-    Vector3 shootDirection = Camera.main.transform.forward;
+    //Vector3 shootDirection = Camera.main.transform.forward;
 
-    rb.velocity = shootDirection * bulletSpeed;
+    //rb.velocity = shootDirection * bulletSpeed;
+
+    //05/07追記
+    // カメラの向きを取得
+    Vector3 camForward = Camera.main.transform.forward;
+
+    // Y成分を除去して「水平成分だけ」にする
+    camForward.y = 0;
+    camForward = camForward.normalized;
+
+    // 水平に飛ばす
+    rb.velocity = camForward * bulletSpeed;
+
+    Destroy(bullet, 3f);
     Destroy(bullet, 3f);
     }
+
+    
 
 }
 
