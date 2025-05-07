@@ -16,9 +16,9 @@ public class ZakoGenerator : MonoBehaviour
 
     public float generateInterval = 2f;
     public GameObject Zako;
-    public float minX = -35f;
-    public float maxX = 35f;
-    public float y = 0f;
+    public float minX = -5f;
+    public float maxX = 5f;
+    public float y = 5f;
     public float generateTime = 5f;
     public float stopTime = 2f;
 
