@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2663828535620789827}
   - component: {fileID: 7337407866334192983}
   m_Layer: 0
-  m_Name: ZakoGenerator
+  m_Name: ObjectGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124cd8c53cbe1487b8e073c7b626a07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zakoSlavePrefab: {fileID: 0}
+  frontRowCount: 0
+  rearColumns: 0
+  rearRows: 0
+  spacingX: 2
+  spacingZ: 2
   generateInterval: 1
   Zako: {fileID: 8484264117809617835, guid: 82c4fc0f9d887413faa98c82006057f7, type: 3}
   minX: -30
@@ -51,3 +57,5 @@ MonoBehaviour:
   y: 0
   generateTime: 5
   stopTime: 2
+  RocksPrefab: {fileID: 0}
+  rocksGenerateInterbal: 15

@@ -1,13 +1,14 @@
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 
-public class ZakoGenerator : MonoBehaviour
+public class ObjectGenerator : MonoBehaviour
 {
-
+    //Zako関連
     public GameObject zakoSlavePrefab;
     public int frontRowCount;      // リーダーの左右に何体出すか（合計: 1 + 2*この数 + リーダー）
     public int rearColumns;        // 後列の横数
@@ -23,10 +24,19 @@ public class ZakoGenerator : MonoBehaviour
     public float generateTime = 5f;
     public float stopTime = 2f;
 
+    //岩関連
+    public GameObject RocksPrefab;
+    public float rocksGenerateInterbal = 10f;
+    Vector3 rockSpawnPosition;
+    
+
+
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(GenerateLoop());
+        StartCoroutine(SpawnRocks());
     }
 
     // Update is called once per frame
@@ -48,12 +58,7 @@ public class ZakoGenerator : MonoBehaviour
             yield return new WaitForSeconds(stopTime);
         }
     }
-    // void Generate()
-    // {
-    //     float randomX = Random.Range(minX, maxX);
-    //     Vector3 spawnPos = new Vector3(randomX, y, 0f);
-    //     Instantiate(Zako, spawnPos, Quaternion.identity);
-    // }
+   
     void Generate()
     {
         frontRowCount = Random.Range(1, 3);      
@@ -94,6 +99,16 @@ public class ZakoGenerator : MonoBehaviour
                 slaveObj.transform.position = zakoTransform.TransformPoint(offset);
             }
         }
+    }
+    IEnumerator SpawnRocks(){
+        while(true){
+            SpawnRock();
+            yield return new WaitForSeconds(rocksGenerateInterbal);
+        }
+    }
+    void SpawnRock(){
+        rockSpawnPosition = new Vector3(3.3f,10,-100);
+        Instantiate(RocksPrefab,rockSpawnPosition,Quaternion.identity);
     }
 
 }

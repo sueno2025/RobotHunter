@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BulletShooter : MonoBehaviour
@@ -8,14 +9,24 @@ public class BulletShooter : MonoBehaviour
     public float fireRate = 0.05f; // 発射間隔（秒）
 
     private float nextFireTime = 0f;
+    CharacterMovement player;
 
+    void Start()
+    {
+      player = GetComponent<CharacterMovement> (); 
+    }
     void Update()
     {
+        if(player != null && player.IsDead){
+            return;
+        }
+
         if (Time.time >= nextFireTime)
         {
             Shoot();
             nextFireTime = Time.time + fireRate;
         }
+
     }
 
     void Shoot()
