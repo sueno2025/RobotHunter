@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+
 public class ZakoGenerator : MonoBehaviour
 {
 
     public GameObject zakoSlavePrefab;
-    public int frontRowCount = 2;      // リーダーの左右に何体出すか（合計: 1 + 2*この数 + リーダー）
-    public int rearColumns = 3;        // 後列の横数
-    public int rearRows = 2;
+    public int frontRowCount;      // リーダーの左右に何体出すか（合計: 1 + 2*この数 + リーダー）
+    public int rearColumns;        // 後列の横数
+    public int rearRows;
     public float spacingX = 2f;
     public float spacingZ = 2f;
 
@@ -54,42 +55,45 @@ public class ZakoGenerator : MonoBehaviour
     //     Instantiate(Zako, spawnPos, Quaternion.identity);
     // }
     void Generate()
-{
-    float randomX = Random.Range(minX, maxX);
-    Vector3 leaderPos = new Vector3(randomX, y, 0f);
-
-    // Zako（リーダー）生成
-    GameObject zakoObj = Instantiate(Zako, leaderPos, Quaternion.identity);
-    Transform zakoTransform = zakoObj.transform;
-
-    // 【前列】リーダーと同じZ位置、左右に展開
-    for (int i = -frontRowCount; i <= frontRowCount; i++)
     {
-        if (i == 0) continue; // 真ん中はリーダー本人
+        frontRowCount = Random.Range(1, 3);      
+        rearColumns = Random.Range(2, 5);        
+        rearRows = Random.Range(2, 5);
+        float randomX = Random.Range(minX, maxX);
+        Vector3 leaderPos = new Vector3(randomX, y, 0f);
 
-        GameObject slaveObj = Instantiate(zakoSlavePrefab);
-        ZakoSlave slaveScript = slaveObj.GetComponent<ZakoSlave>();
-        slaveScript.leader = zakoTransform;
+        // Zako（リーダー）生成
+        GameObject zakoObj = Instantiate(Zako, leaderPos, Quaternion.identity);
+        Transform zakoTransform = zakoObj.transform;
 
-        Vector3 offset = new Vector3(i * spacingX, 0f, 0f);
-        slaveScript.offsetFromLeader = offset;
-        slaveObj.transform.position = zakoTransform.TransformPoint(offset);
-    }
-
-    // 【後列】ZakoのZ後方に格子状に配置
-    for (int z = 1; z <= rearRows; z++)
-    {
-        for (int x = -rearColumns / 2; x <= rearColumns / 2; x++)
+        // 【前列】リーダーと同じZ位置、左右に展開
+        for (int i = -frontRowCount; i <= frontRowCount; i++)
         {
+            if (i == 0) continue; // 真ん中はリーダー本人
+
             GameObject slaveObj = Instantiate(zakoSlavePrefab);
             ZakoSlave slaveScript = slaveObj.GetComponent<ZakoSlave>();
             slaveScript.leader = zakoTransform;
 
-            Vector3 offset = new Vector3(x * spacingX, 0f, -z * spacingZ);
+            Vector3 offset = new Vector3(i * spacingX, 0f, 0f);
             slaveScript.offsetFromLeader = offset;
             slaveObj.transform.position = zakoTransform.TransformPoint(offset);
         }
+
+        // 【後列】ZakoのZ後方に格子状に配置
+        for (int z = 1; z <= rearRows; z++)
+        {
+            for (int x = -rearColumns / 2; x <= rearColumns / 2; x++)
+            {
+                GameObject slaveObj = Instantiate(zakoSlavePrefab);
+                ZakoSlave slaveScript = slaveObj.GetComponent<ZakoSlave>();
+                slaveScript.leader = zakoTransform;
+
+                Vector3 offset = new Vector3(x * spacingX, 0f, -z * spacingZ);
+                slaveScript.offsetFromLeader = offset;
+                slaveObj.transform.position = zakoTransform.TransformPoint(offset);
+            }
+        }
     }
-}
 
 }
