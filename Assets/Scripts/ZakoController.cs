@@ -38,10 +38,14 @@ public class ZakoController : MonoBehaviour
 
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, steerStrength * Time.deltaTime);
+
+            transform.position += transform.forward * speed * Time.deltaTime;
         }
+        else
+        {
 
-        transform.position += transform.forward * speed * Time.deltaTime;
-
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
         if (transform.position.z > player.position.z + 30f)
         {
             Destroy(gameObject);
