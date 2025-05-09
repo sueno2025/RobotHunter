@@ -13,7 +13,7 @@ public class RockController : MonoBehaviour
 
     void Start()
     {
-        hp = Random.Range(30, 61);
+        hp = Random.Range(20, 41);
        
         UpdateHPText();
     
@@ -50,6 +50,7 @@ public class RockController : MonoBehaviour
         if (hp <= 0)
         {
             Instantiate(rockEffect,transform.position,Quaternion.identity);
+            SoundManager.Instance.playRockExplosion();
             Destroy(gameObject);
         }
         if (transform.position.z > 90f) // 画面より十分奥
@@ -67,6 +68,7 @@ public class RockController : MonoBehaviour
                 Instantiate(hitEffect, other.transform.position, Quaternion.identity);
             }
             Destroy(other.gameObject);
+            SoundManager.Instance.PlayExplosionSE();
             hp -= 1;
             Debug.Log($"HP:{hp}");
             UpdateHPText();

@@ -15,14 +15,18 @@ public class BulletShooter : MonoBehaviour
     {
       player = GetComponent<CharacterMovement> (); 
     }
-    void Update()
+    //05/08 LateUpdateに変更
+    void LateUpdate()
     {
         if(player != null && player.IsDead){
             return;
         }
 
         if (Time.time >= nextFireTime)
-        {
+        {   
+            //05/08追記（効果音）微調整必要
+            SoundManager.Instance.PlayShootSE();
+            
             Shoot();
             nextFireTime = Time.time + fireRate;
         }

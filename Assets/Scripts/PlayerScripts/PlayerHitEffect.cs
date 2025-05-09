@@ -14,6 +14,7 @@ public class PlayerHitEffect : MonoBehaviour
             Vector3 spawnPos = transform.position + Vector3.up * 0.5f;
             GameObject effect = Instantiate(hitEffectPrefab,spawnPos,Quaternion.identity);
             Destroy(effect,1f);
+            
         }
     }
 }

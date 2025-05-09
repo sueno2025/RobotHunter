@@ -1672,8 +1672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6.3
-  player: {fileID: 2668209066040404245, guid: 8985ab95861843c41b2b6e988104c6bf, type: 3}
-  steerStrength: 0.1
+  steerStrength: 0.5
 --- !u!54 &1303790976676658642
 Rigidbody:
   m_ObjectHideFlags: 0

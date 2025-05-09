@@ -11,7 +11,8 @@ public class CharacterMovement : MonoBehaviour
     //05/08追記
     bool isDead;
     public bool IsDead => isDead;
-    bool isShooting = true;
+    //使わない　
+    // bool isShooting = true;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -21,6 +22,7 @@ public class CharacterMovement : MonoBehaviour
         }
         //05/06追記
         cc = GetComponent<CharacterController>();
+        
 
     }
 
@@ -61,14 +63,25 @@ public class CharacterMovement : MonoBehaviour
 
         // CharacterControllerで移動
         cc.Move(move * Time.deltaTime);
+
+        //05/08追記
+        // if(isShooting){
+        //     SoundManager.Instance.PlayShootSE();
+        // }
     }
     //05/08追記
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy") || other.CompareTag("Rock"))
         {
-            Debug.Log($"Trigger entered: {other.name} Dead");
+            //05/05追記 死んだら判定無効
+            if(isDead){
+                return;
+            }
+            //Debug.Log($"Trigger entered: {other.name} Dead");
             isDead = true;
+            SoundManager.Instance.playDeathByRock();
+            
 
             animator.SetBool("isDead", true);
 
