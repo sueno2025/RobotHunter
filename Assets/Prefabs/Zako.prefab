@@ -1672,8 +1672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6.3
-  player: {fileID: 2668209066040404245, guid: 8985ab95861843c41b2b6e988104c6bf, type: 3}
-  steerStrength: 0.1
+  steerStrength: 0.5
 --- !u!54 &1303790976676658642
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1762,7 +1761,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5
+  m_Radius: 3
   m_Center: {x: 0, y: -1.41, z: 0}
 --- !u!1 &5316444699845902795
 GameObject:

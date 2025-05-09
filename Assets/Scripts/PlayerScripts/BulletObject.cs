@@ -15,6 +15,8 @@ public class BulletObject : MonoBehaviour
             GameObject effect = Instantiate(hitEffectPrefab,spawnPos,UnityEngine.Quaternion.identity);
             Destroy(effect,1f);
             
+            SoundManager.Instance.PlayExplosionSE();
+            
             Destroy(other.gameObject);  // 敵を消す
             Destroy(gameObject);        // 弾を消す
         }

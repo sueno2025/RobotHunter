@@ -8,7 +8,11 @@ public class CharacterMovement : MonoBehaviour
     CharacterController cc;
     public float gravity = -9.81f; // 重力加速度
     private float verticalVelocity = 0f; // 落下速度保持
-
+    //05/08追記
+    bool isDead;
+    public bool IsDead => isDead;
+    //使わない　
+    // bool isShooting = true;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -18,11 +22,18 @@ public class CharacterMovement : MonoBehaviour
         }
         //05/06追記
         cc = GetComponent<CharacterController>();
-  
+        
+
     }
 
     void Update()
     {
+        //05/08 追記　死んだときの挙動
+        if (isDead)
+        {
+            animator.SetBool("isMoving", false);
+            return; // Update中断して、何もしない
+        }
         // 常にRun_Shooterをアクティブ
         animator.SetBool("isShooting", true);
 
@@ -52,5 +63,28 @@ public class CharacterMovement : MonoBehaviour
 
         // CharacterControllerで移動
         cc.Move(move * Time.deltaTime);
+
+        //05/08追記
+        // if(isShooting){
+        //     SoundManager.Instance.PlayShootSE();
+        // }
+    }
+    //05/08追記
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy") || other.CompareTag("Rock"))
+        {
+            //05/05追記 死んだら判定無効
+            if(isDead){
+                return;
+            }
+            //Debug.Log($"Trigger entered: {other.name} Dead");
+            isDead = true;
+            SoundManager.Instance.playDeathByRock();
+            
+
+            animator.SetBool("isDead", true);
+
+        }
     }
 }
