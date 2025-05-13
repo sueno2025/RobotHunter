@@ -37,7 +37,7 @@ public class ZakoSlave : MonoBehaviour
          // プレイヤーより z が 90 以上離れたら消す（画面奥へ進んで）
         if (transform.position.z > player.position.z + 90f)
         {
-            Debug.Log($"{name} を削除します！");
+            //Debug.Log($"{name} を削除します！");
             Destroy(gameObject);
         }
     }
