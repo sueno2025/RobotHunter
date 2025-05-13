@@ -730,7 +730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1652659528220689927, guid: 71ffa8869d2164900bfc6a9010d2bd66, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2663828535620789827, guid: 71ffa8869d2164900bfc6a9010d2bd66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1148,7 +1148,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6456070446073145668, guid: 6b4b0d37fc731bd4e9f38c0fd509e48f, type: 3}
       propertyPath: m_Name
-      value: GameUI_2
+      value: GameUI
       objectReference: {fileID: 0}
     - target: {fileID: 6492205128442198587, guid: 6b4b0d37fc731bd4e9f38c0fd509e48f, type: 3}
       propertyPath: m_Pivot.x

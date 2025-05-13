@@ -48,7 +48,7 @@ public class BossRobotController : MonoBehaviour
         }
         if (!isReturning && transform.position.z >= 75f)
         {
-            StartCoroutine(ReturnToOrigine());
+            StartCoroutine(ReturnToOrigine(1f));
         }
         //テスト
         if (Input.GetKeyDown(KeyCode.X)) ShootAttack();
@@ -121,8 +121,9 @@ public class BossRobotController : MonoBehaviour
         }
         transform.position = endPos; // 最後ピタッと合わせる
         originalPosition = transform.position;
+        isInvincible = false;
     }
-    IEnumerator ReturnToOrigine()
+    IEnumerator ReturnToOrigine(float duration)
     {
         
         isReturning = true;
@@ -131,7 +132,7 @@ public class BossRobotController : MonoBehaviour
 
         Vector3 start = transform.position;
         Vector3 end = originalPosition;
-        float duration = 1.5f;
+        // float duration = 1.5f;
         float elapsed = 0f;
         while (elapsed < duration)
         {
@@ -147,6 +148,7 @@ public class BossRobotController : MonoBehaviour
     }
     void OnTriggerEnter(Collider other){
         if(other.CompareTag("Bullet")){
+            if(isInvincible)return;
             Destroy(other.gameObject);
             hitCount++;
             hp--;
@@ -156,6 +158,7 @@ public class BossRobotController : MonoBehaviour
         }
     }
     IEnumerator DamagedRoutine(){
+        
         isDamaged = true;
 
         //攻撃キャンセル
@@ -168,7 +171,7 @@ public class BossRobotController : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         if(!isReturning){
-            yield return StartCoroutine(ReturnToOrigine());
+            yield return StartCoroutine(ReturnToOrigine(0.5f));
         }
         hitCount = 0;
         isDamaged = false;
