@@ -1215,7 +1215,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1675466082118650656, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
       propertyPath: hp
-      value: 20
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 1675466082118650656, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
       propertyPath: player
@@ -1223,7 +1223,7 @@ PrefabInstance:
       objectReference: {fileID: 1865804540}
     - target: {fileID: 1675466082118650656, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
       propertyPath: dashForce
-      value: 1500
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 1675466082118650656, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
       propertyPath: hitEffect
@@ -1234,12 +1234,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1950815762522306877, guid: c68950ec4985240169823909c5e86530, type: 3}
     - target: {fileID: 1675466082118650656, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
+      propertyPath: bulletSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675466082118650656, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
       propertyPath: EnemyBulletPrefab
       value: 
       objectReference: {fileID: 5192723324390840536, guid: 3d2a45eccf90843adb16b13b6bb92085, type: 3}
     - target: {fileID: 2317629103746091642, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
       propertyPath: m_Name
       value: BossRobot
+      objectReference: {fileID: 0}
+    - target: {fileID: 2317629103746091642, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000847205057163906, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
       propertyPath: m_LocalPosition.x
