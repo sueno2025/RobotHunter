@@ -65,13 +65,14 @@ public class BossRobotController : MonoBehaviour
     //初期位置までの移動
     void FirstMove()
     {
+        SoundManager.Instance.PlayRoboWalkLoop();
         Vector3 targetPosition = new Vector3(0, 2, 40);
         StartCoroutine(FirstMoveRoutine(transform.position, targetPosition, 3f));
     }
     //突進攻撃
     void MoveAttack()
     {
-
+        SoundManager.Instance.PlayRoboWalkLoop();
         if (isDead || player == null || isReturning || isDamaged) return;
         rb.isKinematic = false; // 物理ON
         isDashing = true;
@@ -96,6 +97,7 @@ public class BossRobotController : MonoBehaviour
     }
     void FireBullet()
     {
+        SoundManager.Instance.PlayRoboShoot();
         animator.SetTrigger("Shoot");
         GameObject bullet = Instantiate(EnemyBulletPrefab, firePoint.position, Quaternion.identity);
         // bullet.transform.localScale = new Vector3(2f, 2f, 2f);
@@ -107,15 +109,12 @@ public class BossRobotController : MonoBehaviour
         rb.velocity = direction * bulletSpeed;
         Destroy(bullet, 3f);
     }
-    void Damaged()
-    {
-        animator.SetTrigger("Damaged");
-    }
+
     //死亡時の挙動
     void Die()
     {
-        SoundManager.Instance.playRockExplosion();
-        Instantiate(RockEffect,transform.position,Quaternion.identity);
+        SoundManager.Instance.PlayRoboClash();
+        Instantiate(RockEffect, transform.position, Quaternion.identity);
         if (isDead) return;
         isDead = true;
         StopAllCoroutines();
@@ -142,6 +141,7 @@ public class BossRobotController : MonoBehaviour
         transform.position = endPos; // 最後ピタッと合わせる
         originalPosition = transform.position;
         isInvincible = false;
+        SoundManager.Instance.StopRoboWalk();
     }
     IEnumerator ReturnToOrigine(float duration)
     {
@@ -164,22 +164,23 @@ public class BossRobotController : MonoBehaviour
         transform.position = end;
         isReturning = false;
         isDashing = false;
+        SoundManager.Instance.StopRoboWalk();
 
     }
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Bullet"))
         {
-            
+
             if (isInvincible) return;
-            if(hp <= 0)return;
+            if (hp <= 0) return;
             hp--;
             if (hp == 0)
             {
                 Die();
             }
             SoundManager.Instance.PlayExplosionSE();
-            Instantiate(hitEffect,transform.position,Quaternion.identity);
+            Instantiate(hitEffect, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
             hitCount++;
             Debug.Log("HP=" + hp);
@@ -201,7 +202,7 @@ public class BossRobotController : MonoBehaviour
 
         animator.SetTrigger("Damaged");
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
 
         if (!isReturning)
         {
