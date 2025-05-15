@@ -10,7 +10,7 @@ public class PlayerHitEffect : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log($"Trigger entered: {other.name}");
+            //Debug.Log($"Trigger entered: {other.name}");
             Vector3 spawnPos = transform.position + Vector3.up * 0.5f;
             GameObject effect = Instantiate(hitEffectPrefab,spawnPos,Quaternion.identity);
             Destroy(effect,1f);
