@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/EffectDestroyer.cs.meta
-guid: 0e04bdab0b5764aee86d3213dbedf1cd
-========
-guid: cc3bdef6cb93e13428843caf631e10e6
->>>>>>>> dev:Assets/Scripts/PlayerScripts/Bullet.cs.meta
+guid: b7ab7daff3903b44d88258f68f9ef5ba
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

@@ -53,4 +53,6 @@ public class ZakoController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-}
+    
+
+} 
