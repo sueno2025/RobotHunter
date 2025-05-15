@@ -23,11 +23,11 @@ public class BossRobotController : MonoBehaviour
     public GameObject hitEffect;
     public GameObject RockEffect;
 
-
     float nextFireTime = 0f;
 
     enum BossState { Idle, Shooting, Waiting, Charging, Returning, Damaged }
     BossState currentState = BossState.Idle;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -35,16 +35,15 @@ public class BossRobotController : MonoBehaviour
         FirstMove();
         StartCoroutine(BossRoutine());
     }
+
     void Update()
     {
         if (isDead || player == null || isDamaged) return;
-
 
         Vector3 direction = player.position - transform.position;
 
         if (direction.sqrMagnitude < 0.3f) return;
 
-        // ボスの見た目が22度ズレてるなら、Y+22度分回転させる
         if (!isDashing && !isReturning)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -54,63 +53,53 @@ public class BossRobotController : MonoBehaviour
         {
             StartCoroutine(ReturnToOrigine(1.5f));
         }
-        //テスト
-        // if (Input.GetKeyDown(KeyCode.X)) ShootAttack();
-        // if (Input.GetKeyDown(KeyCode.Z)) MoveAttack();
-
-
     }
 
-
-    //初期位置までの移動
     void FirstMove()
     {
         SoundManager.Instance.PlayRoboWalkLoop();
         Vector3 targetPosition = new Vector3(0, 2, 40);
         StartCoroutine(FirstMoveRoutine(transform.position, targetPosition, 3f));
     }
-    //突進攻撃
+
     void MoveAttack()
     {
         SoundManager.Instance.PlayRoboWalkLoop();
         if (isDead || player == null || isReturning || isDamaged) return;
-        rb.isKinematic = false; // 物理ON
+        rb.isKinematic = false;
         isDashing = true;
         Vector3 direction = (player.position - transform.position).normalized;
-        direction.y = 0; // 水平方向だけ突進したい場合
-
+        direction.y = 0;
         rb.AddForce(direction * dashForce);
-
     }
-    //銃攻撃
+
     void ShootAttack()
     {
         if (player == null || Time.time < nextFireTime || isDamaged) return;
         FireBullet();
         nextFireTime = Time.time + fireRate;
     }
-    // 強制的に撃つ（cooldown無視）
+
     void ForceShootAttack()
     {
         if (isDead || player == null || isDamaged || isReturning) return;
         FireBullet();
     }
+
     void FireBullet()
     {
         SoundManager.Instance.PlayRoboShoot();
         animator.SetTrigger("Shoot");
         GameObject bullet = Instantiate(EnemyBulletPrefab, firePoint.position, Quaternion.identity);
-        // bullet.transform.localScale = new Vector3(2f, 2f, 2f);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.useGravity = false;
         Vector3 targetPos = player.position;
-        targetPos.y = firePoint.position.y; // 高さを揃える
+        targetPos.y = firePoint.position.y;
         Vector3 direction = (player.position - firePoint.position).normalized;
         rb.velocity = direction * bulletSpeed;
         Destroy(bullet, 3f);
     }
 
-    //死亡時の挙動
     void Die()
     {
         SoundManager.Instance.PlayRoboClash();
@@ -119,11 +108,17 @@ public class BossRobotController : MonoBehaviour
         isDead = true;
         StopAllCoroutines();
         animator.SetBool("IsDead", true);
-        animator.Update(0f); // ← 即反映させる
+        animator.Update(0f);
 
         rb.velocity = Vector3.zero;
         rb.isKinematic = false;
         rb.useGravity = true;
+
+        // 05/15追記 - ボス撃破でスコア200加算
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.AddScore(200);
+        }
 
         Destroy(gameObject, 5f);
     }
@@ -138,21 +133,20 @@ public class BossRobotController : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = endPos; // 最後ピタッと合わせる
+        transform.position = endPos;
         originalPosition = transform.position;
         isInvincible = false;
         SoundManager.Instance.StopRoboWalk();
     }
+
     IEnumerator ReturnToOrigine(float duration)
     {
-
         isReturning = true;
         rb.velocity = Vector3.zero;
         rb.isKinematic = true;
 
         Vector3 start = transform.position;
         Vector3 end = originalPosition;
-        // float duration = 1.5f;
         float elapsed = 0f;
         while (elapsed < duration)
         {
@@ -165,37 +159,46 @@ public class BossRobotController : MonoBehaviour
         isReturning = false;
         isDashing = false;
         SoundManager.Instance.StopRoboWalk();
-
     }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Bullet"))
         {
+            if (isInvincible || hp <= 0) return;
 
-            if (isInvincible) return;
-            if (hp <= 0) return;
-            hp--;
-            if (hp == 0)
+            // 05/15追記 - 弾のダメージ値に基づいてHP減少
+            Bullet bullet = other.GetComponent<Bullet>();
+            if (bullet != null)
+            {
+                hp -= bullet.damage;
+            }
+            else
+            {
+                hp--; // フォールバック
+            }
+
+            if (hp <= 0)
             {
                 Die();
             }
+
             SoundManager.Instance.PlayExplosionSE();
             Instantiate(hitEffect, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
             hitCount++;
             Debug.Log("HP=" + hp);
+
             if (hitCount >= 40 && !isDamaged)
             {
                 StartCoroutine(DamagedRoutine());
             }
         }
     }
+
     IEnumerator DamagedRoutine()
     {
-
         isDamaged = true;
-
-        //攻撃キャンセル
         isDashing = false;
         rb.velocity = Vector3.zero;
         rb.isKinematic = true;
@@ -214,22 +217,11 @@ public class BossRobotController : MonoBehaviour
 
     IEnumerator BossRoutine()
     {
-        yield return new WaitForSeconds(3f); // 初期演出など
+        yield return new WaitForSeconds(3f);
 
         while (true)
         {
-            // 被弾で中断されたら再開まで待機
             while (isDamaged) yield return null;
-
-            // currentState = BossState.Shooting;
-            // for (int i = 0; i < 3; i++)
-            // {
-            //     ShootAttack();
-            //     yield return new WaitForSeconds(0.1f);
-            // }
-
-            // currentState = BossState.Waiting;
-            // yield return new WaitForSeconds(2f);
 
             currentState = BossState.Shooting;
             for (int i = 0; i < 3; i++)
@@ -244,13 +236,10 @@ public class BossRobotController : MonoBehaviour
             currentState = BossState.Charging;
             MoveAttack();
 
-            // Zが75超えたら戻る（Updateで検知）
             yield return new WaitUntil(() => !isReturning);
 
             currentState = BossState.Waiting;
             yield return new WaitForSeconds(2f);
         }
     }
-
-
 }
