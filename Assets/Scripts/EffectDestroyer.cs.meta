@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/EffectDestroyer.cs.meta
+guid: 7595c8cde6114704ea83dac2d72bc3bf
+========
+guid: cc3bdef6cb93e13428843caf631e10e6
+>>>>>>>> dev:Assets/Scripts/PlayerScripts/Bullet.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

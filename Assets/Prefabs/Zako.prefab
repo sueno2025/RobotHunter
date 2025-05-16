@@ -1672,7 +1672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6.3
-  steerStrength: 0.5
+  steerStrength: 2
 --- !u!54 &1303790976676658642
 Rigidbody:
   m_ObjectHideFlags: 0

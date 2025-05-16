@@ -62,6 +62,7 @@ public class CharacterMovement : MonoBehaviour
         Vector3 move = new Vector3(-moveInput * moveSpeed, verticalVelocity, 0);
 
         // CharacterControllerで移動
+        Debug.Log(move);
         cc.Move(move * Time.deltaTime);
 
         //05/08追記
@@ -72,7 +73,7 @@ public class CharacterMovement : MonoBehaviour
     //05/08追記
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") || other.CompareTag("Rock"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Rock")|| other.CompareTag("EnemyBullet"))
         {
             //05/05追記 死んだら判定無効
             if(isDead){

@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Rock
   - Wall
+  - EnemyBullet
+  - Boss
   layers:
   - Default
   - TransparentFX
