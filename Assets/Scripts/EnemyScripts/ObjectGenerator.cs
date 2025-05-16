@@ -24,6 +24,9 @@ public class ObjectGenerator : MonoBehaviour
     public float generateTime = 5f;
     public float stopTime = 2f;
 
+    public int rockSpawnCount = 0;
+    public int maxRocks =5;
+
     //岩関連
     public GameObject RocksPrefab;
     public float rocksGenerateInterbal = 10f;
@@ -101,14 +104,17 @@ public class ObjectGenerator : MonoBehaviour
         }
     }
     IEnumerator SpawnRocks(){
-        while(true){
+        while(rockSpawnCount < maxRocks){
             SpawnRock();
+            rockSpawnCount++;
             yield return new WaitForSeconds(rocksGenerateInterbal);
         }
+        GameManager.Instance.OnRockGenerationComplete();
     }
     void SpawnRock(){
         rockSpawnPosition = new Vector3(3.3f,10,-100);
         Instantiate(RocksPrefab,rockSpawnPosition,Quaternion.identity);
     }
+    
 
 }
