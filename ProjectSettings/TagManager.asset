@@ -8,11 +8,12 @@ TagManager:
   - Enemy
   - Rock
   - Wall
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - DeadPlayer
   - Water
   - UI
   - 

@@ -72,7 +72,7 @@ public class CharacterMovement : MonoBehaviour
     //05/08追記
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") || other.CompareTag("Rock"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Rock")|| other.CompareTag("EnemyBullet"))
         {
             //05/05追記 死んだら判定無効
             if(isDead){
