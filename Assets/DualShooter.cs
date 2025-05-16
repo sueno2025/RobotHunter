@@ -22,6 +22,7 @@ public class DualShooter : MonoBehaviour
     public float lateralMoveSpeed = 2f;
 
     private float timer = 0f;
+    private int currentIndex = 0;
 
     void Update()
     {
@@ -31,18 +32,15 @@ public class DualShooter : MonoBehaviour
 
         if (distance > stopDistance)
         {
-            // プレイヤーに向かって前進（回転なし）
             Vector3 direction = (target.position - transform.position).normalized;
             transform.position += direction * moveSpeed * Time.deltaTime;
         }
         else
         {
-            // プレイヤーのX座標に合わせて横移動
             Vector3 targetPosition = new Vector3(target.position.x, transform.position.y, transform.position.z);
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, lateralMoveSpeed * Time.deltaTime);
         }
 
-        // 発射処理
         if (distance <= shootDistance)
         {
             timer += Time.deltaTime;
@@ -58,24 +56,24 @@ public class DualShooter : MonoBehaviour
     {
         if (bulletPrefab == null || firePoints.Length == 0 || target == null) return;
 
+        Transform firePoint = firePoints[currentIndex];
         Vector3 targetCenter = target.position + Vector3.up * 1.0f;
+        Vector3 direction = (targetCenter - firePoint.position).normalized;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        Vector3 spawnPos = firePoint.position + firePoint.up * 0.1f;
 
-        foreach (Transform firePoint in firePoints)
+        GameObject bullet = Instantiate(bulletPrefab, spawnPos, rotation);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+
+        if (rb != null)
         {
-            Vector3 direction = (targetCenter - firePoint.position).normalized;
-            Quaternion rotation = Quaternion.LookRotation(direction);
-            Vector3 spawnPos = firePoint.position + firePoint.up * 0.1f;
-
-            GameObject bullet = Instantiate(bulletPrefab, spawnPos, rotation);
-            Rigidbody rb = bullet.GetComponent<Rigidbody>();
-
-            if (rb != null)
-            {
-                rb.useGravity = false;
-                rb.velocity = direction * bulletSpeed;
-            }
-
-            Destroy(bullet, 10f); // 弾の寿命を長めに設定
+            rb.useGravity = false;
+            rb.velocity = direction * bulletSpeed;
         }
+
+        Destroy(bullet, 10f);
+
+        // 🔁 次の砲台に切り替え（交互に撃つ）
+        currentIndex = (currentIndex + 1) % firePoints.Length;
     }
 }
