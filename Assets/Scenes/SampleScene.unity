@@ -434,24 +434,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8985ab95861843c41b2b6e988104c6bf, type: 3}
---- !u!1 &547087811 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7095061986299795951, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
-  m_PrefabInstance: {fileID: 866325109}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &547087817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 547087811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 851aa1422a2884d0c967fff065d23b9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 200
 --- !u!1 &571714383 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7095061986299795949, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
@@ -595,7 +577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 526660873637352290, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       propertyPath: moveSpeed
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 526660873637352290, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       propertyPath: bulletSpeed
@@ -607,15 +589,19 @@ PrefabInstance:
       objectReference: {fileID: 9062836287903203336, guid: 83fd925374fcc4011b8156e856420227, type: 3}
     - target: {fileID: 526660873637352290, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       propertyPath: fireInterval
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 526660873637352290, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       propertyPath: stopDistance
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 526660873637352290, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       propertyPath: shootDistance
-      value: 30
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 526660873637352290, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
+      propertyPath: lateralMoveSpeed
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 526660873637352290, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       propertyPath: firePoints.Array.data[0]
@@ -643,15 +629,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7095061986299430285, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7095061986299430285, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.2652
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7095061986299430285, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7095061986299430285, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -742,12 +728,10 @@ PrefabInstance:
       value: 0.00011
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4107459626618717352, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7095061986299795951, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 547087817}
     - targetCorrespondingSourceObject: {fileID: 7095061986299795949, guid: 98109a8ad197a49f98504ace56d516e7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 571714386}
