@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4000847205057163906}
   m_Layer: 0
   m_Name: BossRobot
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,12 +182,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 200
   player: {fileID: 0}
-  bulletPrefab: {fileID: 5192723324390840536, guid: 3d2a45eccf90843adb16b13b6bb92085, type: 3}
+  EnemyBulletPrefab: {fileID: 0}
   firePoint: {fileID: 5726322714805590215}
   bulletSpeed: 30
   fireRate: 0.5
   dashForce: 1000
   rb: {fileID: 9004086431274198705}
+  hitEffect: {fileID: 0}
+  RockEffect: {fileID: 0}
 --- !u!54 &9004086431274198705 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 2787338132867032501, guid: b0a7ce083a5924167aa1a9ed66686ef4, type: 3}
