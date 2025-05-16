@@ -18,7 +18,7 @@ public class BulletShooter : MonoBehaviour
     //05/08 LateUpdateに変更
     void LateUpdate()
     {
-        if(player != null && player.IsDead){
+        if(player != null && player.IsDead ){
             return;
         }
 
@@ -55,7 +55,7 @@ public class BulletShooter : MonoBehaviour
     rb.velocity = camForward * bulletSpeed;
 
     Destroy(bullet, 3f);
-    Destroy(bullet, 3f);
+    // Destroy(bullet, 3f);
     }
 
     

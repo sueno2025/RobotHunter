@@ -4,16 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy Bullet
-  - EnemyBullet
-  - ROck
-  - Rock
   - Bullet
+  - Enemy
+  - Rock
+  - Wall
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - EnemyBullet
+  - DeadPlayer
   - Water
   - UI
   - 

@@ -1,19 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
     public AudioClip bgm;
-    // Start is called before the first frame update
+    public GameObject bossRobot;
+    public GameObject objectGenerator;
+    public CharacterMovement playerController;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
     void Start()
     {
-        SoundManager.Instance.playBGM(bgm,0.7f);
+        SoundManager.Instance.playBGM(bgm, 0.7f);
+        bossRobot.SetActive(false);
+        objectGenerator.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    //敵生成ストップとボスの登場
+    public void OnRockGenerationComplete()
     {
-        
+        Debug.Log("岩生成終了");
+        objectGenerator.SetActive(false);
+        StartCoroutine(ActivateBossAfterDelay(2f));
+    }
+    //ボスの登場を遅らせる処理
+    private IEnumerator ActivateBossAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        bossRobot.SetActive(true);
+    }
+    public void OnBossDefeated()
+    {
+        Debug.Log("Boss撃破");
+        BulletShooter bullet = playerController.GetComponent<BulletShooter>();
+        //発射を無効化
+        bullet.enabled = false;
     }
 }

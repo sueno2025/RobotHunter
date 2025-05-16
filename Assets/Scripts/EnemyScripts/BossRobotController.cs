@@ -124,8 +124,16 @@ public class BossRobotController : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.isKinematic = false;
         rb.useGravity = true;
+        //GameManagerに通知
+        GameManager.Instance.OnBossDefeated();
 
-        Destroy(gameObject, 5f);
+        // 05/15追記 - ボス撃破でスコア200加算
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.AddScore(200);
+        }
+
+        Destroy(gameObject, 3f);
     }
 
     IEnumerator FirstMoveRoutine(Vector3 startPos, Vector3 endPos, float duration)
