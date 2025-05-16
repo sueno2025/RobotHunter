@@ -126,6 +126,13 @@ public class BossRobotController : MonoBehaviour
         rb.useGravity = true;
         //GameManagerに通知
         GameManager.Instance.OnBossDefeated();
+
+        // 05/15追記 - ボス撃破でスコア200加算
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.AddScore(200);
+        }
+
         Destroy(gameObject, 3f);
     }
 
