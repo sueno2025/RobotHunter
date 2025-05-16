@@ -10,11 +10,12 @@ public class RockController : MonoBehaviour
     public GameObject rockEffect;
     public TextMeshProUGUI hpText;
     int hp;
+    int initialHp; // 05/15追記 - 初期HPを保存
 
     void Start()
     {
         hp = Random.Range(20, 41);
-       
+        initialHp = hp; // 05/15追記 - 初期HPを設定
         UpdateHPText();
     
     }
@@ -72,8 +73,27 @@ public class RockController : MonoBehaviour
             hp -= 1;
             Debug.Log($"HP:{hp}");
             UpdateHPText();
+            if (hp <= 0)
+            {
+                Die(); // 05/15追記 - 破壊処理を分離
+            }
         }
     }
+
+    void Die()
+    {
+        // 05/15追記 - 破壊時にエフェクトとスコア加算
+        Instantiate(rockEffect, transform.position, Quaternion.identity);
+        SoundManager.Instance.playRockExplosion();
+        if (ScoreManager.Instance != null)
+        {
+            int score = (int)(initialHp * 1.5f);
+            ScoreManager.Instance.AddScore(score);
+            Debug.Log($"Rock destroyed, added score: {score}");
+        }
+        Destroy(gameObject);
+    }
+
     void UpdateHPText()
     {
         if (hpText != null)
