@@ -22,8 +22,8 @@ public class CharacterMovement : MonoBehaviour
         }
         //05/06追記
         cc = GetComponent<CharacterController>();
-        
 
+        isDead = false;
     }
 
     void Update()
@@ -68,6 +68,7 @@ public class CharacterMovement : MonoBehaviour
         // if(isShooting){
         //     SoundManager.Instance.PlayShootSE();
         // }
+        
     }
     //05/08追記
     void OnTriggerEnter(Collider other)
@@ -80,8 +81,9 @@ public class CharacterMovement : MonoBehaviour
             }
             //Debug.Log($"Trigger entered: {other.name} Dead");
             isDead = true;
-            SoundManager.Instance.playDeathByRock();
             
+            SoundManager.Instance.playDeathByRock();
+            SoundManager.Instance.StopRoboWalk();  
 
             animator.SetBool("isDead", true);
 

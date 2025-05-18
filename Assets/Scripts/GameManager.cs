@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject bossRobot;
     public GameObject objectGenerator;
     public CharacterMovement playerController;
-
+    public UIManager2 ui;
     void Awake()
     {
         if (Instance == null)
@@ -28,6 +28,14 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.playBGM(bgm, 0.7f);
         bossRobot.SetActive(false);
         objectGenerator.SetActive(true);
+        playerController = FindObjectOfType<CharacterMovement>();
+    }
+    void Update()
+    {
+        if (playerController.IsDead)
+        {
+            IsGameOver();
+        }
     }
 
     //敵生成ストップとボスの登場
@@ -46,8 +54,28 @@ public class GameManager : MonoBehaviour
     public void OnBossDefeated()
     {
         Debug.Log("Boss撃破");
+    
         BulletShooter bullet = playerController.GetComponent<BulletShooter>();
         //発射を無効化
         bullet.enabled = false;
+        StartCoroutine(DelayGameClearUI());
+    }
+    private IEnumerator DelayGameClearUI()
+    {
+        yield return new WaitForSeconds(1.5f);
+        ui.ShowGameClear();
+    }
+    public void IsGameOver()
+    {
+        if (playerController.IsDead)
+        {
+            StartCoroutine(DelayGameOverUI());
+        }
+
+    }
+    private IEnumerator DelayGameOverUI()
+    {
+        yield return new WaitForSeconds(0.8f);
+        ui.ShowGameOver();
     }
 }

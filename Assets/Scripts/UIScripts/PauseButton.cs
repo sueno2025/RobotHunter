@@ -32,6 +32,8 @@ public class PauseButton : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
         if (pausePanel != null) pausePanel.SetActive(true);
+        //05/18追記
+        SoundManager.Instance.StopBGM();  // ★ BGMを止める
     }
 
     void ResumeGame()
@@ -39,6 +41,8 @@ public class PauseButton : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         if (pausePanel != null) pausePanel.SetActive(false);
+        //05/18追記
+        SoundManager.Instance.playBGM(SoundManager.Instance.bgm); // ★ BGM再開（任意）
     }
 
 }

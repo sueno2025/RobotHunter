@@ -20,6 +20,7 @@ public class BossRobotController : MonoBehaviour
     bool isDamaged = false;
     bool isInvincible = true;
     bool isDead;
+    public bool IsDead { get; private set; }
     public GameObject hitEffect;
     public GameObject RockEffect;
 
@@ -28,6 +29,8 @@ public class BossRobotController : MonoBehaviour
 
     enum BossState { Idle, Shooting, Waiting, Charging, Returning, Damaged }
     BossState currentState = BossState.Idle;
+
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -72,6 +75,10 @@ public class BossRobotController : MonoBehaviour
     //突進攻撃
     void MoveAttack()
     {
+        // 追加: プレイヤー死亡チェック
+        var pc = player.GetComponent<CharacterMovement>();
+        if (pc != null && pc.IsDead) return;
+
         SoundManager.Instance.PlayRoboWalkLoop();
         if (isDead || player == null || isReturning || isDamaged) return;
         rb.isKinematic = false; // 物理ON
@@ -92,11 +99,19 @@ public class BossRobotController : MonoBehaviour
     // 強制的に撃つ（cooldown無視）
     void ForceShootAttack()
     {
+        // 追加: プレイヤー死亡チェック
+        var pc = player.GetComponent<CharacterMovement>();
+        if (pc != null && pc.IsDead) return;
+
         if (isDead || player == null || isDamaged || isReturning) return;
         FireBullet();
     }
     void FireBullet()
     {
+        // 追加: プレイヤー死亡チェック
+        var pc = player.GetComponent<CharacterMovement>();
+        if (pc != null && pc.IsDead) return;
+
         SoundManager.Instance.PlayRoboShoot();
         animator.SetTrigger("Shoot");
         GameObject bullet = Instantiate(EnemyBulletPrefab, firePoint.position, Quaternion.identity);
@@ -117,6 +132,7 @@ public class BossRobotController : MonoBehaviour
         Instantiate(RockEffect, transform.position, Quaternion.identity);
         if (isDead) return;
         isDead = true;
+        IsDead = true;
         StopAllCoroutines();
         animator.SetBool("IsDead", true);
         animator.Update(0f); // ← 即反映させる
@@ -127,10 +143,20 @@ public class BossRobotController : MonoBehaviour
         //GameManagerに通知
         GameManager.Instance.OnBossDefeated();
 
-        // 05/15追記 - ボス撃破でスコア200加算
+        // これを追加
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("GameManager.Instance が null です！");
+        }
+        else
+        {
+            Debug.Log("GameManager.Instance は取得できています");
+            GameManager.Instance.OnBossDefeated();
+        }
+        // 05/15追記 - ボス撃破でスコア200加算 //8000
         if (ScoreManager.Instance != null)
         {
-            ScoreManager.Instance.AddScore(200);
+            ScoreManager.Instance.AddScore(8000);
         }
 
         Destroy(gameObject, 3f);

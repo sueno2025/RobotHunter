@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,12 +11,14 @@ public class UIManager : MonoBehaviour
     [Header("GameOver UI")]
     public CanvasGroup gameOverCanvasGroup;
     public CanvasGroup returnToMenuCanvasGroup;
+    public GameObject gameClearUI;
+    public BossRobotController bossRobot;
 
     void Start()
     {
         if (gameOverCanvasGroup != null)
         {
-            gameOverCanvasGroup.alpha = 0f;
+            gameOverCanvasGroup.alpha = 1f;
             gameOverCanvasGroup.gameObject.SetActive(false);
             gameOverCanvasGroup.interactable = false;
             gameOverCanvasGroup.blocksRaycasts = false;
@@ -23,15 +26,20 @@ public class UIManager : MonoBehaviour
 
         if (returnToMenuCanvasGroup != null)
         {
-            returnToMenuCanvasGroup.alpha = 0f;
+            returnToMenuCanvasGroup.alpha = 1f;
             returnToMenuCanvasGroup.gameObject.SetActive(false);
             returnToMenuCanvasGroup.interactable = false;
             returnToMenuCanvasGroup.blocksRaycasts = false;
+        }
+        if (gameClearUI != null)
+        {
+            gameClearUI.SetActive(false);
         }
     }
 
     public void ShowGameOverUI()
     {
+        
         if (pauseButton != null)
             pauseButton.SetActive(false);
 
@@ -45,9 +53,26 @@ public class UIManager : MonoBehaviour
             StartCoroutine(FadeInCanvasGroup(returnToMenuCanvasGroup, 1f, 1.8f));
         }
     }
+    public void ShowGameClearUI()
+    {
+        Transform lose = gameClearUI.transform.parent;
+        if (lose != null && !lose.gameObject.activeSelf)
+        {
+            lose.gameObject.SetActive(true);
+            Debug.Log("Loseオブジェクトを有効化しました");
+        }
+        if (bossRobot != null)
+        {
+            // gameOverCanvasGroup.gameObject.SetActive(false);
+            gameClearUI.SetActive(true);
+            returnToMenuCanvasGroup.gameObject.SetActive(true);
+            Debug.Log("clear!!!");
+        }
+    }
 
     IEnumerator FadeInCanvasGroup(CanvasGroup cg, float duration, float delay = 0f)
     {
+        
         yield return new WaitForSeconds(delay);
 
         cg.gameObject.SetActive(true);
