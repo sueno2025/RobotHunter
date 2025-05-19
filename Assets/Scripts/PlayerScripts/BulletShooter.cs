@@ -49,7 +49,7 @@ public class BulletShooter : MonoBehaviour
         // 水平に飛ばす
         rb.velocity = camForward * bulletSpeed;
 
-        Destroy(bullet, 3f);
+        Destroy(bullet, 2f);
     }
 
     // 05/19追記: bulletSpeedを増加させる公開メソッド
