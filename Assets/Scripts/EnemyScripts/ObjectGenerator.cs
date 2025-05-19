@@ -25,13 +25,13 @@ public class ObjectGenerator : MonoBehaviour
     public float stopTime = 2f;
 
     public int rockSpawnCount = 0;
-    public int maxRocks =5;
+    public int maxRocks = 5;
 
     //岩関連
     public GameObject RocksPrefab;
     public float rocksGenerateInterbal = 10f;
     Vector3 rockSpawnPosition;
-    
+
 
 
 
@@ -61,11 +61,19 @@ public class ObjectGenerator : MonoBehaviour
             yield return new WaitForSeconds(stopTime);
         }
     }
-   
+
     void Generate()
     {
-        frontRowCount = Random.Range(1, 3);      
-        rearColumns = Random.Range(2, 5);        
+        // レベルに応じて数の上限を拡張
+        int maxFront = 2 + GameManager.playerLevel;       
+        int maxRearCols = 4 + GameManager.playerLevel;    
+        int maxRearRows = 4 + GameManager.playerLevel;
+
+        frontRowCount = Random.Range(1, Mathf.Min(maxFront, 6)); // 上限6くらいで止める
+        rearColumns = Random.Range(2, Mathf.Min(maxRearCols, 7));
+        rearRows = Random.Range(2, Mathf.Min(maxRearRows, 6));
+        frontRowCount = Random.Range(1, 3);
+        rearColumns = Random.Range(2, 5);
         rearRows = Random.Range(2, 5);
         float randomX = Random.Range(minX, maxX);
         Vector3 leaderPos = new Vector3(randomX, y, 0f);
@@ -103,18 +111,21 @@ public class ObjectGenerator : MonoBehaviour
             }
         }
     }
-    IEnumerator SpawnRocks(){
-        while(rockSpawnCount < maxRocks){
+    IEnumerator SpawnRocks()
+    {
+        while (rockSpawnCount < maxRocks)
+        {
             SpawnRock();
             rockSpawnCount++;
             yield return new WaitForSeconds(rocksGenerateInterbal);
         }
         GameManager.Instance.OnRockGenerationComplete();
     }
-    void SpawnRock(){
-        rockSpawnPosition = new Vector3(3.3f,10,-100);
-        Instantiate(RocksPrefab,rockSpawnPosition,Quaternion.identity);
+    void SpawnRock()
+    {
+        rockSpawnPosition = new Vector3(3.3f, 10, -100);
+        Instantiate(RocksPrefab, rockSpawnPosition, Quaternion.identity);
     }
-    
+
 
 }

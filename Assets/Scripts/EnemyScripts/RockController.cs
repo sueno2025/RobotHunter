@@ -17,8 +17,8 @@ public class RockController : MonoBehaviour
         hp = Random.Range(20, 41);
         initialHp = hp; // 05/15追記 - 初期HPを設定
         UpdateHPText();
-    
     }
+
     void LateUpdate()
     {
         if (hpText != null && hpText.transform.parent != null)
@@ -44,15 +44,13 @@ public class RockController : MonoBehaviour
         Vector3 moveDirection = -forward;
         transform.Translate(moveDirection * speed * Time.deltaTime);
 
-        //回転処理
+        // 回転処理
         transform.Rotate(Vector3.forward * 360 * Time.deltaTime);
 
-        //破壊処理
+        // 破壊処理
         if (hp <= 0)
         {
-            Instantiate(rockEffect,transform.position,Quaternion.identity);
-            SoundManager.Instance.playRockExplosion();
-            Destroy(gameObject);
+            Die(); // 05/15追記 - 破壊処理を分離
         }
         if (transform.position.z > 90f) // 画面より十分奥
         {
@@ -60,23 +58,19 @@ public class RockController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    public void TakeDamage(int damage)
     {
-        if (other.CompareTag("Enemy") || other.CompareTag("Bullet"))
+        if (hitEffect != null)
         {
-            if (hitEffect != null)
-            {
-                Instantiate(hitEffect, other.transform.position, Quaternion.identity);
-            }
-            Destroy(other.gameObject);
-            SoundManager.Instance.PlayExplosionSE();
-            hp -= 1;
-            Debug.Log($"HP:{hp}");
-            UpdateHPText();
-            if (hp <= 0)
-            {
-                Die(); // 05/15追記 - 破壊処理を分離
-            }
+            Instantiate(hitEffect, transform.position, Quaternion.identity);
+        }
+        SoundManager.Instance.PlayExplosionSE();
+        hp -= damage;
+        Debug.Log($"HP:{hp}");
+        UpdateHPText();
+        if (hp <= 0)
+        {
+            Die();
         }
     }
 
@@ -88,8 +82,15 @@ public class RockController : MonoBehaviour
         if (ScoreManager.Instance != null)
         {
             int score = (int)(initialHp * 1.5f);
-            ScoreManager.Instance.AddScore(score*100);
+            ScoreManager.Instance.AddScore(score * 100);
             Debug.Log($"Rock destroyed, added score: {score}");
+        }
+        // 05/19追記: BulletShooterのbulletSpeedとfireRateを調整
+        BulletShooter bulletShooter = FindObjectOfType<BulletShooter>();
+        if (bulletShooter != null)
+        {
+            bulletShooter.IncreaseBulletSpeed(10f);
+            bulletShooter.IncreaseFireRate(0.005f); // 05/19追記: fireRateを減少（発射頻度アップ）
         }
         Destroy(gameObject);
     }
@@ -102,10 +103,4 @@ public class RockController : MonoBehaviour
             Debug.Log($"HP表示更新: {hpText.text}");
         }
     }
-    //消えない
-    // void OnBecameInvisible()
-    // {
-    //     Destroy(gameObject);
-
-    // }
 }

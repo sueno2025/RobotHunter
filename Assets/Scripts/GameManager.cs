@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public GameObject objectGenerator;
     public CharacterMovement playerController;
     public UIManager2 ui;
+    //05/19追記
+    public static int playerLevel;
+
     void Awake()
     {
         if (Instance == null)
@@ -29,6 +32,8 @@ public class GameManager : MonoBehaviour
         bossRobot.SetActive(false);
         objectGenerator.SetActive(true);
         playerController = FindObjectOfType<CharacterMovement>();
+        //05/19追記
+        playerLevel = 0;
     }
     void Update()
     {
