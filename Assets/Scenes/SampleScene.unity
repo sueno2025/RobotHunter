@@ -621,6 +621,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1052097199757542419, guid: 8985ab95861843c41b2b6e988104c6bf, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1153328581500275729, guid: 8985ab95861843c41b2b6e988104c6bf, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -1340,13 +1344,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00013499317, y: 0.99898326, z: -0.044984877, w: -0.0029970354}
-  m_LocalPosition: {x: -0.38591257, y: 18.520128, z: 82.68631}
+  m_LocalRotation: {x: -0.00013499356, y: 0.9989832, z: -0.04498471, w: -0.0029970377}
+  m_LocalPosition: {x: -0.5706699, y: 14.598144, z: 84.36206}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 40, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 33.3, y: 180.344, z: 0}
 --- !u!1001 &979217017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1827,6 +1831,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d65b3f646be141c98326cc010269340, type: 3}
+--- !u!1 &1698477297 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1721982589139582561, guid: 6b4b0d37fc731bd4e9f38c0fd509e48f, type: 3}
+  m_PrefabInstance: {fileID: 1982947203}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1698487287 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7809738272350625254, guid: eb01c5295cee01949a204d95d2c70e03, type: 3}
@@ -2266,6 +2275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverPanel: {fileID: 1847064875}
   gameClearPanel: {fileID: 171472141}
+  pauseButton: {fileID: 1698477297}
   titleButton: {fileID: 629511061}
   gameOverCanvasGroup: {fileID: 2038211542}
   gameClearCanvasGroup: {fileID: 215085416}
@@ -2685,7 +2695,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1675466082118650656, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
       propertyPath: hp
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1675466082118650656, guid: e22a4577c496949eda3bcda5c47c1253, type: 3}
       propertyPath: player
